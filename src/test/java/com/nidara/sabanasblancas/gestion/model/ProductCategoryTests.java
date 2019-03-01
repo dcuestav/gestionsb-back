@@ -1,5 +1,6 @@
 package com.nidara.sabanasblancas.gestion.model;
 
+import com.nidara.sabanasblancas.gestion.model.enums.ProductCategory;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,7 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
 import com.nidara.sabanasblancas.gestion.exceptions.InvalidProductCategoryIdException;
-import com.nidara.sabanasblancas.gestion.model.ProductCategory;
+import com.nidara.sabanasblancas.gestion.model.enums.ProductCategory;
 
 import java.util.Collections;
 import java.util.List;

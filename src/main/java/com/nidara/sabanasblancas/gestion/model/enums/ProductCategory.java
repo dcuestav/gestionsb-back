@@ -1,4 +1,4 @@
-package com.nidara.sabanasblancas.gestion.model;
+package com.nidara.sabanasblancas.gestion.model.enums;
 
 import com.nidara.sabanasblancas.gestion.exceptions.InvalidProductCategoryIdException;
 

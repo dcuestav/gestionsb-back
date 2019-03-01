@@ -1,5 +1,7 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
+import com.nidara.sabanasblancas.gestion.model.enums.QueryOrder;
+
 public class QuoteQueryBuilder extends AbstractQueryBuilder {
 
     public static final String ID_QUOTE = "id_quote";

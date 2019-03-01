@@ -3,8 +3,8 @@ package com.nidara.sabanasblancas.gestion.daos.rowmappers;
 import com.mysql.cj.util.StringUtils;
 import com.nidara.sabanasblancas.gestion.model.Quote;
 import com.nidara.sabanasblancas.gestion.model.QuoteClient;
-import com.nidara.sabanasblancas.gestion.model.QuoteState;
-import com.nidara.sabanasblancas.gestion.model.Taxes;
+import com.nidara.sabanasblancas.gestion.model.enums.QuoteState;
+import com.nidara.sabanasblancas.gestion.model.enums.Taxes;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

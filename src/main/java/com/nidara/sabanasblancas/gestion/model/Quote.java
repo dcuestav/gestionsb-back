@@ -1,5 +1,8 @@
 package com.nidara.sabanasblancas.gestion.model;
 
+import com.nidara.sabanasblancas.gestion.model.enums.QuoteState;
+import com.nidara.sabanasblancas.gestion.model.enums.Taxes;
+
 import java.math.BigDecimal;
 import java.util.Date;
 

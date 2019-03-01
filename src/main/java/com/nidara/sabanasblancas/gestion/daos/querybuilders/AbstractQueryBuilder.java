@@ -1,6 +1,7 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
 import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
+import com.nidara.sabanasblancas.gestion.model.enums.QueryOrder;
 
 abstract class AbstractQueryBuilder {
 
