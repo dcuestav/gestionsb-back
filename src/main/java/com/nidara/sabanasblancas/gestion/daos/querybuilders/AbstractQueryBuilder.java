@@ -2,7 +2,7 @@ package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
 import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
 
-abstract class AbastractQueryBuilder {
+abstract class AbstractQueryBuilder {
 
     private StringBuilder selectBuilder = new StringBuilder();
     private StringBuilder fromBuilder = new StringBuilder();

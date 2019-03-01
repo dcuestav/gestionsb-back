@@ -6,19 +6,9 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductRowMapper extends AbstractRowMapper<Product> {
+import static com.nidara.sabanasblancas.gestion.daos.querybuilders.ProductCombinationQueryBuilder.*;
 
-    public static final String ID_PRODUCT = "id_product";
-    public static final String ID_PRODUCT_ATTRIBUTE = "id_product_attribute";
-    public static final String REFERENCE = "reference";
-    public static final String NAME = "name";
-    public static final String COLOR = "color";
-    public static final String SIZE = "size";
-    public static final String PRICE = "price";
-    public static final String COST = "cost";
-    public static final String WEIGHT = "weight";
-    public static final String CURRENT_STOCK = "currentStock";
-    public static final String IS_PACK = "is_pack";
+public class ProductRowMapper extends AbstractRowMapper<Product> {
 
     public static final String UNKNOWN = "???";
 

@@ -1,6 +1,6 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
-public class QuoteQueryBuilder extends AbastractQueryBuilder {
+public class QuoteQueryBuilder extends AbstractQueryBuilder {
 
     public static final String ID_QUOTE = "id_quote";
     public static final String QUOTE_DATE = "quote_date";
