@@ -12,6 +12,8 @@ public class Quote {
     private QuoteState state;
     private BigDecimal total;
 
+    private QuoteClient client;
+
     public Integer getId() {
         return id;
     }
@@ -66,5 +68,13 @@ public class Quote {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public QuoteClient getClient() {
+        return client;
+    }
+
+    public void setClient(QuoteClient client) {
+        this.client = client;
     }
 }

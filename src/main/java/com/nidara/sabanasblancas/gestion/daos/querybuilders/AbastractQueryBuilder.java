@@ -1,14 +1,17 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
+import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
+
 abstract class AbastractQueryBuilder {
 
     private StringBuilder selectBuilder = new StringBuilder();
     private StringBuilder fromBuilder = new StringBuilder();
+    private StringBuilder joinBuilder = new StringBuilder();
     private StringBuilder whereBuilder = new StringBuilder();
     private StringBuilder orderBuilder = new StringBuilder();
 
     private Integer page;
-    private int size = 10;
+    private int size = PagedResult.DEFAULT_SIZE;
 
     void addSelectField(String expression, String alias) {
         if (selectBuilder.length()==0) {
@@ -31,7 +34,9 @@ abstract class AbastractQueryBuilder {
     }
 
     void addJoin(String expression) {
-
+        joinBuilder.append(" ");
+        joinBuilder.append(expression);
+        joinBuilder.append(" ");
     }
 
     void addWhere(String expression) {
@@ -71,6 +76,7 @@ abstract class AbastractQueryBuilder {
         StringBuilder queryBuilder = new StringBuilder(selectBuilder);
 
         queryBuilder.append(fromBuilder);
+        queryBuilder.append(joinBuilder);
         queryBuilder.append(whereBuilder);
         queryBuilder.append(orderBuilder);
 
@@ -80,6 +86,17 @@ abstract class AbastractQueryBuilder {
             queryBuilder.append(" OFFSET ");
             queryBuilder.append(page*size);
         }
+
+        return queryBuilder.toString();
+    }
+
+    String buildCountQuery() {
+        StringBuilder queryBuilder = new StringBuilder();
+
+        queryBuilder.append("SELECT COUNT(*) ");
+        queryBuilder.append(fromBuilder);
+        queryBuilder.append(joinBuilder);
+        queryBuilder.append(whereBuilder);
 
         return queryBuilder.toString();
     }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PagedResult<T> {
 
-    public static final long DEFAULT_PAGE = 0;
+    public static final int DEFAULT_PAGE = 0;
 
     public static final int DEFAULT_SIZE = 20;
 

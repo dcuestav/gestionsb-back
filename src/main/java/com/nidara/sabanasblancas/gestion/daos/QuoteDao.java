@@ -24,7 +24,9 @@ public class QuoteDao {
 
         List<Quote> quotes = jdbcTemplate.query(sql, new QuoteRowMapper());
 
-        long totalElements = 0l; // Obtener
+        String countSql = new QuoteQueryBuilder().buildCount();
+
+        Long totalElements = jdbcTemplate.queryForObject(countSql, Long.class);
 
         return new PagedResult<Quote>(quotes, totalElements, page, size);
     }

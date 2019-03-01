@@ -2,6 +2,7 @@ package com.nidara.sabanasblancas.gestion.daos.rowmappers;
 
 import com.mysql.cj.util.StringUtils;
 import com.nidara.sabanasblancas.gestion.model.Quote;
+import com.nidara.sabanasblancas.gestion.model.QuoteClient;
 import com.nidara.sabanasblancas.gestion.model.QuoteState;
 import com.nidara.sabanasblancas.gestion.model.Taxes;
 
@@ -22,6 +23,17 @@ public class QuoteRowMapper extends AbstractRowMapper<Quote> {
         quote.setState(getQuoteState(resultSet, STATE, null));
         quote.setComments(getString(resultSet, COMMENTS, ""));
         quote.setDeliveryTime(getString(resultSet, DELIVERY_TIME, ""));
+
+        QuoteClient client = new QuoteClient();
+        client.setId(getInteger(resultSet, CLIENT_ID, null));
+        client.setPrestaId(getInteger(resultSet, CLIENT_PRESTA_ID, null));
+        client.setName(getString(resultSet, CLIENT_NAME, ""));
+        client.setAddress(getString(resultSet, CLIENT_ADDRESS, ""));
+        client.setCompany(getString(resultSet, CLIENT_COMPANY, ""));
+        client.setEmail(getString(resultSet, CLIENT_EMAIL, ""));
+        client.setTelephone(getString(resultSet, CLIENT_PHONE, ""));
+
+        quote.setClient(client);
 
         return quote;
     }
