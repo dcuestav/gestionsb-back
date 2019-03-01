@@ -1,13 +1,12 @@
 package com.nidara.sabanasblancas.gestion.daos.rowmappers;
 
 import com.nidara.sabanasblancas.gestion.model.Product;
-import org.springframework.jdbc.core.RowMapper;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ProductRowMapper implements RowMapper<Product> {
+public class ProductRowMapper extends AbstractRowMapper<Product> {
 
     public static final String ID_PRODUCT = "id_product";
     public static final String ID_PRODUCT_ATTRIBUTE = "id_product_attribute";
@@ -44,38 +43,6 @@ public class ProductRowMapper implements RowMapper<Product> {
         }
 
         return product;
-    }
-
-    private Integer getInteger(ResultSet resultSet, String field, Integer defaultValue) {
-        try {
-            return resultSet.getInt(field);
-        } catch(SQLException e) {
-            return defaultValue;
-        }
-    }
-
-    private String getString(ResultSet resultSet, String field, String defaultValue) {
-        try {
-            return resultSet.getString(field);
-        } catch(SQLException e) {
-            return defaultValue;
-        }
-    }
-
-    private Boolean getBoolean(ResultSet resultSet, String field, Boolean defaultValue) {
-        try {
-            return resultSet.getBoolean(field);
-        } catch(SQLException e) {
-            return defaultValue;
-        }
-    }
-
-    private BigDecimal getBigDecimal(ResultSet resultSet, String field, BigDecimal defaultValue) {
-        try {
-            return resultSet.getBigDecimal(field);
-        } catch(SQLException e) {
-            return defaultValue;
-        }
     }
 
 }

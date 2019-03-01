@@ -2,6 +2,7 @@
 .mvn
 /mvnw*
 *.properties
+/migration/
 
 ### STS ###
 .apt_generated
