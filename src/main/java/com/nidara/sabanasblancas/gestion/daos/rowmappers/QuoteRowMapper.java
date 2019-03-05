@@ -31,7 +31,7 @@ public class QuoteRowMapper extends AbstractRowMapper<Quote> {
         client.setAddress(getString(resultSet, CLIENT_ADDRESS, ""));
         client.setCompany(getString(resultSet, CLIENT_COMPANY, ""));
         client.setEmail(getString(resultSet, CLIENT_EMAIL, ""));
-        client.setTelephone(getString(resultSet, CLIENT_PHONE, ""));
+        client.setPhone(getString(resultSet, CLIENT_PHONE, ""));
 
         quote.setClient(client);
 

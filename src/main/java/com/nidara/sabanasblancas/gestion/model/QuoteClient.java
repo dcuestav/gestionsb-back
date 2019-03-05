@@ -1,14 +1,18 @@
 package com.nidara.sabanasblancas.gestion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class QuoteClient {
 
+    @JsonIgnore
     private Integer id;
+    @JsonIgnore
     private Integer prestaId;
     private String name;
     private String address;
     private String company;
     private String email;
-    private String telephone;
+    private String phone;
 
     public Integer getId() {
         return id;
@@ -58,12 +62,12 @@ public class QuoteClient {
         this.email = email;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
 }

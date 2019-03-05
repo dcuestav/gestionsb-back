@@ -1,6 +1,8 @@
 package com.nidara.sabanasblancas.gestion.daos;
 
+import com.nidara.sabanasblancas.gestion.daos.querybuilders.QuoteLineQueryBuilder;
 import com.nidara.sabanasblancas.gestion.daos.querybuilders.QuoteQueryBuilder;
+import com.nidara.sabanasblancas.gestion.daos.rowmappers.QuoteLineRowMapper;
 import com.nidara.sabanasblancas.gestion.daos.rowmappers.QuoteRowMapper;
 import com.nidara.sabanasblancas.gestion.model.Quote;
 import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
@@ -29,5 +31,22 @@ public class QuoteDao {
         Long totalElements = jdbcTemplate.queryForObject(countSql, Long.class);
 
         return new PagedResult<Quote>(quotes, totalElements, page, size);
+    }
+
+    public Quote getById(int quoteId) {
+
+        String sql = new QuoteQueryBuilder()
+                .withClientDetails()
+                .withId(quoteId)
+                .build();
+
+        Quote quote = jdbcTemplate.queryForObject(sql, new QuoteRowMapper());
+
+        if (quote!=null) {
+            String linesSql = new QuoteLineQueryBuilder(quoteId).build();
+            quote.setLines(jdbcTemplate.query(linesSql, new QuoteLineRowMapper()));
+        }
+
+        return quote;
     }
 }

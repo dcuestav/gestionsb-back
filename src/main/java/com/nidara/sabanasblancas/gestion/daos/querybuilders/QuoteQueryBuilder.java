@@ -48,6 +48,11 @@ public class QuoteQueryBuilder extends AbstractQueryBuilder {
         return this;
     }
 
+    public QuoteQueryBuilder withId(int quoteId) {
+        addWhere("q.id_quote=" + quoteId);
+        return this;
+    }
+
     public QuoteQueryBuilder page(int page, int size) {
         setPage(page, size);
         return this;

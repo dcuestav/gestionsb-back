@@ -45,4 +45,21 @@ public class ProductDao {
 
         return productCombinations;
     }
+
+    public List<Product> getAll() {
+
+        String combinationsSql = new ProductCombinationQueryBuilder()
+                .withColorAndSize()
+                .build();
+
+        String packsSql = new ProductPackQueryBuilder()
+                .build();
+
+        List<Product> productCombinations = jdbcTemplate.query(combinationsSql, new ProductRowMapper());
+        List<Product> productPacks = jdbcTemplate.query(packsSql, new ProductRowMapper());
+
+        productCombinations.addAll(productPacks);
+
+        return productCombinations;
+    }
 }

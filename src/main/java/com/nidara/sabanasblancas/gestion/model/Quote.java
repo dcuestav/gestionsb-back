@@ -5,6 +5,7 @@ import com.nidara.sabanasblancas.gestion.model.enums.Taxes;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class Quote {
     private Integer id;
@@ -14,6 +15,15 @@ public class Quote {
     private Taxes taxes;
     private QuoteState state;
     private BigDecimal total;
+    private List<QuoteLine> lines;
+
+    public List<QuoteLine> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<QuoteLine> lines) {
+        this.lines = lines;
+    }
 
     private QuoteClient client;
 
