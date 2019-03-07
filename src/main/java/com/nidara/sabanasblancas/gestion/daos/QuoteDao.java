@@ -1,15 +1,17 @@
 package com.nidara.sabanasblancas.gestion.daos;
 
-import com.nidara.sabanasblancas.gestion.daos.querybuilders.QuoteLineQueryBuilder;
 import com.nidara.sabanasblancas.gestion.daos.querybuilders.QuoteQueryBuilder;
-import com.nidara.sabanasblancas.gestion.daos.rowmappers.QuoteLineRowMapper;
 import com.nidara.sabanasblancas.gestion.daos.rowmappers.QuoteRowMapper;
 import com.nidara.sabanasblancas.gestion.model.Quote;
 import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
+import com.nidara.sabanasblancas.gestion.model.enums.QuoteState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -17,6 +19,9 @@ public class QuoteDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private EntityManager entityManager;
 
     public PagedResult<Quote> getQuotes(int page, int size) {
 
@@ -35,18 +40,27 @@ public class QuoteDao {
 
     public Quote getById(int quoteId) {
 
-        String sql = new QuoteQueryBuilder()
-                .withClientDetails()
-                .withId(quoteId)
-                .build();
-
-        Quote quote = jdbcTemplate.queryForObject(sql, new QuoteRowMapper());
-
-        if (quote!=null) {
-            String linesSql = new QuoteLineQueryBuilder(quoteId).build();
-            quote.setLines(jdbcTemplate.query(linesSql, new QuoteLineRowMapper()));
-        }
-
-        return quote;
+        Query query = entityManager.createQuery("SELECT q FROM Quote q WHERE q.id = :id");
+        query.setParameter("id", quoteId);
+        return (Quote) query.getSingleResult();
     }
+
+    @Transactional
+    public void updateQuoteState(int quoteId, QuoteState state) {
+        String query = "UPDATE gsb_quote SET state=? WHERE id_quote=?";
+        jdbcTemplate.update(query, state.toString(), quoteId);
+    }
+
+    @Transactional
+    public Integer create(Quote quote) {
+        entityManager.persist(quote);
+        return quote.getId();
+    }
+
+    @Transactional
+    public void update(Quote quote) {
+        quote.recalculateTotal();
+        entityManager.merge(quote);
+    }
+
 }

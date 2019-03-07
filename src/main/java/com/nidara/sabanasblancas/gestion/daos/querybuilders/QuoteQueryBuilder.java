@@ -10,7 +10,7 @@ public class QuoteQueryBuilder extends AbstractQueryBuilder {
     public static final String TAXES = "taxes";
     public static final String STATE = "state";
     public static final String COMMENTS = "comments";
-    public static final String DELIVERY_TIME = "deliveryTime";
+    public static final String DELIVERY_TIME = "delivery_time";
 
     public static final String CLIENT_ID = "client_id";
     public static final String CLIENT_PRESTA_ID = "client_ps_id";
@@ -28,7 +28,7 @@ public class QuoteQueryBuilder extends AbstractQueryBuilder {
         addSelectField("q.taxes", TAXES);
         addSelectField("q.state", STATE);
         addSelectField("q.comments", COMMENTS);
-        addSelectField("q.deliveryTime", DELIVERY_TIME);
+        addSelectField("q.delivery_time", DELIVERY_TIME);
 
         addSelectField("c.id_quote_customer", CLIENT_ID);
         addSelectField("c.name", CLIENT_NAME);
@@ -42,7 +42,7 @@ public class QuoteQueryBuilder extends AbstractQueryBuilder {
     public QuoteQueryBuilder withClientDetails() {
         addSelectField("c.ps_id_customer", CLIENT_PRESTA_ID);
         addSelectField("c.address", CLIENT_ADDRESS);
-        addSelectField("c.companyName", CLIENT_COMPANY);
+        addSelectField("c.company_name", CLIENT_COMPANY);
         addSelectField("c.email", CLIENT_EMAIL);
         addSelectField("c.telephone", CLIENT_PHONE);
         return this;

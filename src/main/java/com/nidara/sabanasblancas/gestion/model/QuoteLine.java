@@ -2,20 +2,46 @@ package com.nidara.sabanasblancas.gestion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "gsb_quote_line")
 public class QuoteLine {
 
-    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_quote_line")
     private Integer id;
+
+    @Column
     private Integer lineNumber;
+
+    @Column
     private String productReference;
+
+    @Column
     private String productName;
+
+    @Column
     private String productColor;
+
+    @Column
     private String productSize;
+
+    @Column
     private String productComments;
+
+    @Column
     private BigDecimal productPrice;
+
+    @Column
     private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "id_quote")
+    @JsonIgnore
+    private Quote quote;
 
     public Integer getId() {
         return id;
@@ -87,5 +113,17 @@ public class QuoteLine {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Quote getQuote() {
+        return quote;
+    }
+
+    public void setQuote(Quote quote) {
+        this.quote = quote;
+    }
+
+    public BigDecimal getTotal() {
+        return productPrice.multiply(new BigDecimal(quantity));
     }
 }

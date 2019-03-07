@@ -2,16 +2,34 @@ package com.nidara.sabanasblancas.gestion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "gsb_quote_client")
 public class QuoteClient {
 
-    @JsonIgnore
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_quote_customer")
     private Integer id;
+
+    @Column(name = "ps_id_customer")
     @JsonIgnore
     private Integer prestaId;
+
+    @Column
     private String name;
+
+    @Column
     private String address;
+
+    @Column(name = "company_name")
     private String company;
+
+    @Column
     private String email;
+
+    @Column(name = "telephone")
     private String phone;
 
     public Integer getId() {
