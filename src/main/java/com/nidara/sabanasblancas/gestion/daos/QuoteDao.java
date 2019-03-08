@@ -53,6 +53,7 @@ public class QuoteDao {
 
     @Transactional
     public Integer create(Quote quote) {
+        quote.recalculateTotal();
         entityManager.persist(quote);
         return quote.getId();
     }
