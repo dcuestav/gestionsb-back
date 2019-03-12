@@ -3,6 +3,7 @@ package com.nidara.sabanasblancas.gestion;
 import com.nidara.sabanasblancas.gestion.api.model.ApiProduct;
 import com.nidara.sabanasblancas.gestion.config.ApiConnector;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.net.URISyntaxException;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Import(ApiConnector.class)
+@Ignore
 public class ApiConnectorTests {
 
     @Autowired
