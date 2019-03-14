@@ -2,7 +2,9 @@ package com.nidara.sabanasblancas.gestion.controllers;
 
 import com.nidara.sabanasblancas.gestion.controllers.dtos.StockIncrement;
 import com.nidara.sabanasblancas.gestion.daos.ProductDao;
+import com.nidara.sabanasblancas.gestion.exceptions.StockIncrementCannotBeZeroException;
 import com.nidara.sabanasblancas.gestion.model.Product;
+import com.nidara.sabanasblancas.gestion.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,9 @@ public class ProductController {
 
     @Autowired
     ProductDao productDao;
+
+    @Autowired
+    StockService stockService;
 
     @RequestMapping("/products")
     public List<Product> getAllProducts() {
@@ -26,12 +31,21 @@ public class ProductController {
 
     @PostMapping("/products/stock")
     public List<Product> getStockProducts(@RequestBody List<Integer> stockIds) {
-        return productDao.getStockProducts(stockIds);
+        return stockService.getStockProducts(stockIds);
     }
 
     @PutMapping("/products/stock")
     public void updateStockIncrements(@RequestBody List<StockIncrement> stockIncrements) {
-        productDao.updateProductStocks(stockIncrements);
+        checkIncrementsNonZero(stockIncrements);
+        stockService.updateProductStocks(stockIncrements);
+    }
+
+    private void checkIncrementsNonZero(List<StockIncrement> stockIncrements) {
+        for (StockIncrement increment: stockIncrements) {
+            if (increment.getIncrement() == 0) {
+                throw new StockIncrementCannotBeZeroException();
+            }
+        }
     }
 
 }

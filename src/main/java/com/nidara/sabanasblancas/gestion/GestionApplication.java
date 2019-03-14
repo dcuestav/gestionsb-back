@@ -8,6 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
+import javax.annotation.PostConstruct;
+import java.util.Date;
+import java.util.TimeZone;
+
 @SpringBootApplication
 @ComponentScan("com.nidara.sabanasblancas.gestion")
 @PropertySources({
@@ -20,6 +24,12 @@ public class GestionApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(GestionApplication.class, args);
+    }
+
+    @PostConstruct
+    public void init(){
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Madrid"));
+        log.info("Spring boot application running in Madrid timezone :" + new Date());
     }
 
 }
