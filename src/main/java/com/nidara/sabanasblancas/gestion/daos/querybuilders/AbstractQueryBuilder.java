@@ -3,6 +3,8 @@ package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
 import com.nidara.sabanasblancas.gestion.model.enums.QueryOrder;
 
+import java.util.List;
+
 abstract class AbstractQueryBuilder {
 
     private StringBuilder selectBuilder = new StringBuilder();
@@ -100,6 +102,18 @@ abstract class AbstractQueryBuilder {
         queryBuilder.append(whereBuilder);
 
         return queryBuilder.toString();
+    }
+
+    String intArrayToInClause(List<Integer> integerList) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("(");
+        for (Integer intValue : integerList) {
+            builder.append(intValue);
+            builder.append(",");
+        }
+        builder.deleteCharAt(builder.length()-1);
+        builder.append(") ");
+        return builder.toString();
     }
 
 }

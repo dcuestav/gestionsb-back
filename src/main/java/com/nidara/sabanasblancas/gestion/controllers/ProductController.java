@@ -1,11 +1,10 @@
 package com.nidara.sabanasblancas.gestion.controllers;
 
+import com.nidara.sabanasblancas.gestion.controllers.dtos.StockIncrement;
 import com.nidara.sabanasblancas.gestion.daos.ProductDao;
 import com.nidara.sabanasblancas.gestion.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,16 @@ public class ProductController {
     @RequestMapping("/products/{categoryId}")
     public List<Product> getCategoryProducts(@PathVariable("categoryId") int categoryId) {
         return productDao.getByCategory(categoryId);
+    }
+
+    @PostMapping("/products/stock")
+    public List<Product> getStockProducts(@RequestBody List<Integer> stockIds) {
+        return productDao.getStockProducts(stockIds);
+    }
+
+    @PutMapping("/products/stock")
+    public void updateStockIncrements(@RequestBody List<StockIncrement> stockIncrements) {
+        productDao.updateProductStocks(stockIncrements);
     }
 
 }

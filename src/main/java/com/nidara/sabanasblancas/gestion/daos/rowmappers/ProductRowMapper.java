@@ -24,6 +24,7 @@ public class ProductRowMapper extends AbstractRowMapper<Product> {
         product.setPrice(getBigDecimal(resultSet, PRICE, BigDecimal.ZERO));
         product.setCost(getBigDecimal(resultSet, COST, BigDecimal.ZERO));
         product.setWeight(getBigDecimal(resultSet, WEIGHT, BigDecimal.ZERO));
+        product.setIdStock(getInteger(resultSet, ID_STOCK, null));
         product.setCurrentStock(getInteger(resultSet, CURRENT_STOCK, null));
         product.setPack(getBoolean(resultSet, IS_PACK, false));
 

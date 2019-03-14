@@ -34,9 +34,9 @@ public class UpdateQueryBuilder {
         return connection -> {
             PreparedStatement ps = connection.prepareStatement(generateSql());
             for (int index=0; index< values.size(); index++) {
-                ps.setObject(index, values.get(index));
+                ps.setObject(index+1, values.get(index));
             }
-            ps.setInt(values.size(), idWhereValue);
+            ps.setInt(values.size()+1, idWhereValue);
             return ps;
         };
     }
@@ -56,7 +56,7 @@ public class UpdateQueryBuilder {
         builder.deleteCharAt(builder.length()-1);
         builder.deleteCharAt(builder.length()-1);
 
-        builder.append("WHERE ");
+        builder.append(" WHERE ");
 
         builder.append(whereField);
         builder.append("=?");

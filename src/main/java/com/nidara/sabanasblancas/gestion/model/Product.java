@@ -13,6 +13,7 @@ public class Product {
     private BigDecimal price;
     private BigDecimal cost;
     private BigDecimal weight;
+    private Integer idStock;
     private Integer currentStock;
     private Boolean isPack;
 
@@ -86,6 +87,14 @@ public class Product {
 
     public void setWeight(BigDecimal weight) {
         this.weight = weight;
+    }
+
+    public Integer getIdStock() {
+        return idStock;
+    }
+
+    public void setIdStock(Integer idStock) {
+        this.idStock = idStock;
     }
 
     public Integer getCurrentStock() {

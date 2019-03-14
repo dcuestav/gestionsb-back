@@ -1,5 +1,7 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
+import java.util.List;
+
 import static com.nidara.sabanasblancas.gestion.daos.querybuilders.ProductCombinationQueryBuilder.*;
 
 public class ProductPackQueryBuilder extends AbstractQueryBuilder {
@@ -22,6 +24,7 @@ public class ProductPackQueryBuilder extends AbstractQueryBuilder {
     }
 
     public ProductPackQueryBuilder withStock() {
+        addSelectField("st.id_stock_available", ID_STOCK);
         addSelectField("st.quantity", CURRENT_STOCK);
         addJoin("JOIN ps_stock_available st ON p.id_product=st.id_product");
         return this;
@@ -30,6 +33,11 @@ public class ProductPackQueryBuilder extends AbstractQueryBuilder {
     public ProductPackQueryBuilder withCategory(int idCategory) {
         WithCategoryClauseHelper clauseBuilder = WithCategoryClauseHelper.getInstance();
         addWhere(clauseBuilder.getWhereClauseForCategory(idCategory));
+        return this;
+    }
+
+    public ProductPackQueryBuilder withStockIdIn(List<Integer> stockIds) {
+        addWhere("st.id_stock_available IN " + intArrayToInClause(stockIds));
         return this;
     }
 
