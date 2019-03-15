@@ -112,7 +112,6 @@ public class ProductDao {
             int initialQuantity = quantities.get(stockId);
             int finalQuantity = initialQuantity + increment.getIncrement();
             updateProductStock(stockId, finalQuantity);
-//            createStockMovement();
         }
     }
 

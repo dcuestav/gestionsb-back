@@ -1,7 +1,6 @@
 package com.nidara.sabanasblancas.gestion.model;
 
 import com.nidara.sabanasblancas.gestion.controllers.dtos.StockIncrement;
-import com.nidara.sabanasblancas.gestion.model.enums.StockMvtReason;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,6 +12,8 @@ public class StockMovement {
     static final int DEFAULT_EMPLOYEE = 1;
     static final String DEFAULT_FIRSTNAME = "GestionSB";
     static final String DEFAULT_LASTNAME = "";
+    public static final int SIGN_POSITIVE = 1;
+    public static final int SIGN_NEGATIVE = -1;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +27,7 @@ public class StockMovement {
     private Integer idOrder;
 
     @Column(name = "id_stock_mvt_reason")
-    @Enumerated(EnumType.ORDINAL)
-    private StockMvtReason reason;
+    private Integer reasonId;
 
     @Column(name = "id_employee")
     private Integer idEmployee;
@@ -48,25 +48,22 @@ public class StockMovement {
     private Integer sign;
 
     public StockMovement() {
-        this.sign = 1;
+        this.sign = SIGN_POSITIVE;
         this.idEmployee = DEFAULT_EMPLOYEE;
         this.employeeFirstName = DEFAULT_FIRSTNAME;
         this.employeeLastName = DEFAULT_LASTNAME;
     }
 
-    public StockMovement(Integer idStock, StockMvtReason reason, Integer quantity) {
+    public StockMovement(Integer idStock, Integer reasonId, Integer quantity) {
         this();
         this.idStock = idStock;
-        this.reason = reason;
+        this.reasonId = reasonId;
         setQuantity(quantity);
         this.date = new Date();
     }
 
-    public StockMovement(StockIncrement increment) {
-        this(increment.getStockId(), StockMvtReason.INCREASE_DUE_TO_EMPLOYEE_EDITION, increment.getIncrement());
-        if (increment.getIncrement()<0) {
-            this.reason = StockMvtReason.DECREASE_DUE_TO_EMPLOYEE_EDITION;
-        }
+    public StockMovement(StockIncrement increment, Integer reasonId) {
+        this(increment.getStockId(), reasonId, increment.getIncrement());
     }
 
     public Long getId() {
@@ -93,12 +90,12 @@ public class StockMovement {
         this.idOrder = idOrder;
     }
 
-    public StockMvtReason getReason() {
-        return reason;
+    public Integer getReasonId() {
+        return reasonId;
     }
 
-    public void setReason(StockMvtReason reason) {
-        this.reason = reason;
+    public void setReasonId(Integer reasonId) {
+        this.reasonId = reasonId;
     }
 
     public Integer getIdEmployee() {
@@ -132,7 +129,7 @@ public class StockMovement {
     public void setQuantity(Integer quantity) {
         if (quantity < 0) {
             this.quantity = -quantity;
-            this.sign = -1;
+            this.sign = SIGN_NEGATIVE;
         } else {
             this.quantity = quantity;
         }

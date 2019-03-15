@@ -1,6 +1,6 @@
 package com.nidara.sabanasblancas.gestion.model.enums;
 
-public enum StockMvtReason {
+public enum StockMvtReasonEnum {
 
     NOT_VALID(0, 1),
     INCREASE(1, 1),
@@ -19,7 +19,7 @@ public enum StockMvtReason {
     private final int value;
     private final int sign; // 1 o -1
 
-    StockMvtReason(int value, int sign) {
+    StockMvtReasonEnum(int value, int sign) {
         this.value = value;
         this.sign = sign;
     }

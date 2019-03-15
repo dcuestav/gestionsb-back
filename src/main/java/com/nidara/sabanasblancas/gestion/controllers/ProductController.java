@@ -1,6 +1,7 @@
 package com.nidara.sabanasblancas.gestion.controllers;
 
 import com.nidara.sabanasblancas.gestion.controllers.dtos.StockIncrement;
+import com.nidara.sabanasblancas.gestion.controllers.dtos.StockVariation;
 import com.nidara.sabanasblancas.gestion.daos.ProductDao;
 import com.nidara.sabanasblancas.gestion.exceptions.StockIncrementCannotBeZeroException;
 import com.nidara.sabanasblancas.gestion.model.Product;
@@ -35,9 +36,9 @@ public class ProductController {
     }
 
     @PutMapping("/products/stock")
-    public void updateStockIncrements(@RequestBody List<StockIncrement> stockIncrements) {
-        checkIncrementsNonZero(stockIncrements);
-        stockService.updateProductStocks(stockIncrements);
+    public void updateStockIncrements(@RequestBody StockVariation stockVariation) {
+        checkIncrementsNonZero(stockVariation.getStockIncrements());
+        stockService.updateProductStocks(stockVariation);
     }
 
     private void checkIncrementsNonZero(List<StockIncrement> stockIncrements) {

@@ -3,6 +3,7 @@ package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public class InsertQueryBuilder {
 
     public PreparedStatementCreator build() {
         return connection -> {
-            PreparedStatement ps = connection.prepareStatement(generateSql());
+            PreparedStatement ps = connection.prepareStatement(generateSql(), Statement.RETURN_GENERATED_KEYS);
             for (int index=0; index< values.size(); index++) {
-                ps.setObject(index, values.get(index));
+                ps.setObject(index+1, values.get(index));
             }
             return ps;
         };
@@ -51,7 +52,7 @@ public class InsertQueryBuilder {
         builder.deleteCharAt(builder.length()-1);
         builder.append(")");
 
-        valuesBuilder.deleteCharAt(builder.length()-1);
+        valuesBuilder.deleteCharAt(valuesBuilder.length()-1);
         valuesBuilder.append(")");
 
         builder.append(valuesBuilder);
