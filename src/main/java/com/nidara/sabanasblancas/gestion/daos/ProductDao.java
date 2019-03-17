@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +70,7 @@ public class ProductDao {
         return productCombinations;
     }
 
-    public List<Product> getStockProducts(List<Integer> stockIds) {
+    public List<Product> getStockProducts(Collection<Integer> stockIds) {
         if (stockIds.isEmpty()) {
             return Collections.emptyList();
         }
@@ -82,7 +83,7 @@ public class ProductDao {
     }
 
 
-    private List<Product> getProductCombinationsByStockId(List<Integer> stockIds) {
+    private List<Product> getProductCombinationsByStockId(Collection<Integer> stockIds) {
         String sql = new ProductCombinationQueryBuilder()
                 .withColorAndSize()
                 .withStock()
@@ -92,7 +93,7 @@ public class ProductDao {
         return jdbcTemplate.query(sql, new ProductRowMapper());
     }
 
-    private List<Product> getProductPacksByStockId(List<Integer> stockIds) {
+    private List<Product> getProductPacksByStockId(Collection<Integer> stockIds) {
         String sql = new ProductPackQueryBuilder()
                 .withStock()
                 .withStockIdIn(stockIds)

@@ -47,6 +47,12 @@ public class StockMovement {
     @Column(name = "sign")
     private Integer sign;
 
+    @Transient
+    private Product product;
+
+    @Transient
+    private String reason = "???";
+
     public StockMovement() {
         this.sign = SIGN_POSITIVE;
         this.idEmployee = DEFAULT_EMPLOYEE;
@@ -149,5 +155,21 @@ public class StockMovement {
 
     public void setSign(Integer sign) {
         this.sign = sign;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 }

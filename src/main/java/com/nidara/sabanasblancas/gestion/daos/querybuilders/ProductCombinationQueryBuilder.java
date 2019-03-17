@@ -1,6 +1,6 @@
 package com.nidara.sabanasblancas.gestion.daos.querybuilders;
 
-import java.util.List;
+import java.util.Collection;
 
 public class ProductCombinationQueryBuilder extends AbstractQueryBuilder {
 
@@ -66,7 +66,7 @@ public class ProductCombinationQueryBuilder extends AbstractQueryBuilder {
         return this;
     }
 
-    public ProductCombinationQueryBuilder withStockIdIn(List<Integer> stockIds) {
+    public ProductCombinationQueryBuilder withStockIdIn(Collection<Integer> stockIds) {
         addWhere("st.id_stock_available IN " + intArrayToInClause(stockIds));
         return this;
     }

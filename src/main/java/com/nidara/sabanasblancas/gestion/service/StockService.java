@@ -7,12 +7,18 @@ import com.nidara.sabanasblancas.gestion.daos.StockMvtReasonDao;
 import com.nidara.sabanasblancas.gestion.daos.StockMvtRepository;
 import com.nidara.sabanasblancas.gestion.model.Product;
 import com.nidara.sabanasblancas.gestion.model.StockMovement;
+import com.nidara.sabanasblancas.gestion.model.StockMvtReason;
 import com.nidara.sabanasblancas.gestion.model.enums.StockMvtReasonEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,5 +63,34 @@ public class StockService {
             }
             return new StockMovement(increment, reasonId);
         }).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<StockMovement> getMovementsByDate(LocalDate date) {
+        ZoneId zoneId = TimeZone.getDefault().toZoneId();
+        Date from = Date.from(date.atStartOfDay(zoneId).toInstant());
+        Date until = Date.from(date.plusDays(1).atStartOfDay(zoneId).toInstant().minusMillis(1));
+        List<StockMovement> movements = stockMvtRepository.getByDateBetween(from, until);
+        fillWithReasons(movements);
+        fillWithProducts(movements);
+        return movements;
+    }
+
+    private void fillWithProducts(List<StockMovement> movements) {
+        List<Integer> stockIds = movements.stream().map(StockMovement::getIdStock).distinct().collect(Collectors.toList());
+        List<Product> products = productDao.getStockProducts(stockIds);
+        Map<Integer, Product> productMap = products.stream().collect(Collectors.toMap(Product::getIdStock, (product -> product)));
+        for (StockMovement movement: movements) {
+            movement.setProduct(productMap.get(movement.getIdStock()));
+        }
+    }
+
+    private void fillWithReasons(List<StockMovement> movements) {
+        List<Integer> reasonIds = movements.stream().map(StockMovement::getReasonId).distinct().collect(Collectors.toList());
+        List<StockMvtReason> reasons = stockMvtReasonDao.getReasons(reasonIds);
+        Map<Integer, String> reasonMap = reasons.stream().collect(Collectors.toMap(StockMvtReason::getId, StockMvtReason::getName));
+        for (StockMovement movement: movements) {
+            movement.setReason(reasonMap.get(movement.getReasonId()));
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.nidara.sabanasblancas.gestion.daos;
 
 import com.nidara.sabanasblancas.gestion.daos.querybuilders.InsertQueryBuilder;
+import com.nidara.sabanasblancas.gestion.daos.querybuilders.StockMvtReasonQueryBuilder;
+import com.nidara.sabanasblancas.gestion.daos.rowmappers.StockMvtReasonRowMapper;
 import com.nidara.sabanasblancas.gestion.model.StockMovement;
-import com.nidara.sabanasblancas.gestion.model.enums.StockMvtReasonEnum;
+import com.nidara.sabanasblancas.gestion.model.StockMvtReason;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -10,7 +12,9 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public class StockMvtReasonDao {
@@ -19,6 +23,14 @@ public class StockMvtReasonDao {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    public List<StockMvtReason> getReasons(Collection<Integer> ids) {
+        String sql = new StockMvtReasonQueryBuilder()
+                .withIdIn(ids)
+                .build();
+
+        return jdbcTemplate.query(sql, new StockMvtReasonRowMapper());
+    }
 
     @Transactional
     public Integer createReason(String reason) {
@@ -45,13 +57,6 @@ public class StockMvtReasonDao {
         builder.setField("id_lang", SPANISH_LANG);
         builder.setField("name", reason);
         jdbcTemplate.update(builder.build());
-    }
-
-    public StockMvtReasonEnum getDefaultReasonForSign(int sign) {
-        if (sign == StockMovement.SIGN_POSITIVE) {
-            return StockMvtReasonEnum.INCREASE_DUE_TO_EMPLOYEE_EDITION;
-        }
-        return StockMvtReasonEnum.DECREASE_DUE_TO_EMPLOYEE_EDITION;
     }
 
 }
