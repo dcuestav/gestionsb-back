@@ -71,8 +71,10 @@ public class StockService {
         Date from = Date.from(date.atStartOfDay(zoneId).toInstant());
         Date until = Date.from(date.plusDays(1).atStartOfDay(zoneId).toInstant().minusMillis(1));
         List<StockMovement> movements = stockMvtRepository.getByDateBetween(from, until);
-        fillWithReasons(movements);
-        fillWithProducts(movements);
+        if (!movements.isEmpty()) {
+            fillWithReasons(movements);
+            fillWithProducts(movements);
+        }
         return movements;
     }
 
