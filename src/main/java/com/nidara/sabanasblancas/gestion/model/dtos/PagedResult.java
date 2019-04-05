@@ -1,5 +1,7 @@
 package com.nidara.sabanasblancas.gestion.model.dtos;
 
+import org.springframework.data.domain.Page;
+
 import java.util.List;
 
 public class PagedResult<T> {
@@ -17,15 +19,17 @@ public class PagedResult<T> {
     private List<T> elements;
 
     public PagedResult(List<T> elements, long totalElements, int page, int size) {
-
         this.elements = elements;
-
         this.totalElements = totalElements;
-
         this.page = page;
-
         this.size = size;
+    }
 
+    public PagedResult(Page<T> page) {
+        this.elements = page.getContent();
+        this.totalElements = page.getTotalElements();
+        this.page = page.getNumber();
+        this.size = page.getSize();
     }
 
     public int getPage() {

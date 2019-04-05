@@ -8,8 +8,12 @@ import com.nidara.sabanasblancas.gestion.daos.StockMvtRepository;
 import com.nidara.sabanasblancas.gestion.model.Product;
 import com.nidara.sabanasblancas.gestion.model.StockMovement;
 import com.nidara.sabanasblancas.gestion.model.StockMvtReason;
+import com.nidara.sabanasblancas.gestion.model.dtos.PagedResult;
 import com.nidara.sabanasblancas.gestion.model.enums.StockMvtReasonEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,6 +80,18 @@ public class StockService {
             fillWithProducts(movements);
         }
         return movements;
+    }
+
+    @Transactional(readOnly = true)
+    public PagedResult<StockMovement> getMovementsByProduct(int stockId, int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<StockMovement> page = stockMvtRepository.getByIdStockOrderByIdDesc(stockId, pageable);
+        List<StockMovement> movements = page.getContent();
+        if (!movements.isEmpty()) {
+            fillWithReasons(movements);
+            fillWithProducts(movements);
+        }
+        return new PagedResult(page);
     }
 
     private void fillWithProducts(List<StockMovement> movements) {
